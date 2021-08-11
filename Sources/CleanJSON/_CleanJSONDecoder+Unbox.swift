@@ -22,10 +22,10 @@ extension _CleanJSONDecoder {
                 return false
             }
             
-            /* FIXME: If swift-corelibs-foundation doesn't change to use NSNumber, this code path will need to be included and tested:
-             } else if let bool = value as? Bool {
-             return bool
-             */
+            // FIXME: If swift-corelibs-foundation doesn't change to use NSNumber, this code path will need to be included and tested:
+            else if let bool = value as? Bool {
+              return bool
+            } 
             
         }
         
