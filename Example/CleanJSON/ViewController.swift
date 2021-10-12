@@ -76,7 +76,18 @@ class ViewController: UIViewController {
         
         let json = #"""
              {
-                 "optional": 122
+                 "boolean": true,
+                 "integer": 1,
+                 "double": -3.14159265358979323846,
+                 "string": "string",
+                 "array": [1, 2.1, "3", true],
+                 "snake_case": "convertFromSnakeCase",
+                 "date": "date",
+                 "nested": "{\"alpha\": \"alpha\", \"b\": 1, \"c\": 2}",
+                 "data": "",
+                 "url": null,
+                 "dict": {"hello": 2},
+                 "optional": 122.333
              }
         """#.data(using: .utf8)!
         
