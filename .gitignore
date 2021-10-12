@@ -3,3 +3,6 @@
 /Packages
 /*.xcodeproj
 xcuserdata/
+Example/*.xcodeproj
+Example/*.xcworkspace/xcuserdata
+Example/CleanJSON.xcworkspace/xcshareddata

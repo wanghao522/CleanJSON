@@ -118,7 +118,13 @@ public extension JSONAdapter {
     
     @inline(__always)
     func adapt(_ decoder: CleanDecoder) throws -> Int64 {
-        return Int64.defaultValue
+        guard !decoder.decodeNil() else { return Int64.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return Int64.defaultValue
+        }
+        
+        return Int64(stringValue) ?? Int64.defaultValue
     }
     
     @inline(__always)
@@ -216,7 +222,14 @@ public extension JSONAdapter {
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> Int? {
-        return nil
+        guard !decoder.decodeNil() else { return Int.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return Int.defaultValue
+        }
+        
+        return Int(stringValue) ?? Int.defaultValue
+        
     }
     
     @inline(__always)
@@ -236,12 +249,24 @@ public extension JSONAdapter {
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> Int64? {
-        return nil
+        guard !decoder.decodeNil() else { return Int64.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return Int64.defaultValue
+        }
+        
+        return Int64(stringValue) ?? Int64.defaultValue
     }
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> UInt? {
-        return nil
+        guard !decoder.decodeNil() else { return UInt.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return UInt.defaultValue
+        }
+        
+        return UInt(stringValue) ?? UInt.defaultValue
     }
     
     @inline(__always)
@@ -261,27 +286,57 @@ public extension JSONAdapter {
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> UInt64? {
-        return nil
+        guard !decoder.decodeNil() else { return UInt64.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return UInt64.defaultValue
+        }
+        
+        return UInt64(stringValue) ?? UInt64.defaultValue
     }
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> Float? {
-        return nil
+        guard !decoder.decodeNil() else { return Float.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return Float.defaultValue
+        }
+        
+        return Float(stringValue) ?? Float.defaultValue
     }
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> Double? {
-        return nil
+        guard !decoder.decodeNil() else { return Double.defaultValue }
+        
+        guard let stringValue = try decoder.decodeIfPresent(String.self) else {
+            return Double.defaultValue
+        }
+        
+        return Double(stringValue) ?? Double.defaultValue
     }
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> String? {
-        return nil
+        guard !decoder.decodeNil() else { return String.defaultValue }
+        
+        if let intValue = try decoder.decodeIfPresent(Int.self) {
+            return String(intValue)
+        } else if let doubleValue = try decoder.decodeIfPresent(Double.self) {
+            return String(doubleValue)
+        } else if let boolValue = try decoder.decodeIfPresent(Bool.self) {
+            return String(boolValue)
+        }
+        
+        return String.defaultValue
     }
     
     @inline(__always)
     func adaptIfPresent(_ decoder: CleanDecoder) throws -> Date? {
-        return nil
+        guard let decoder = decoder as? _CleanJSONDecoder else { return Date.defaultValue }
+        
+        return Date.defaultValue(for: decoder.options.dateDecodingStrategy)
     }
     
     @inline(__always)

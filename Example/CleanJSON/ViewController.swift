@@ -8,7 +8,9 @@
 
 import UIKit
 import CleanJSON
-
+struct TestModel1: Codable {
+    let optional: String?
+}
 struct TestModel<T: Codable>: Codable {
     let boolean: Int
     let integer: Float
@@ -74,17 +76,7 @@ class ViewController: UIViewController {
         
         let json = #"""
              {
-                 "boolean": true,
-                 "integer": 1,
-                 "double": -3.14159265358979323846,
-                 "string": "string",
-                 "array": [1, 2.1, "3", true],
-                 "snake_case": "convertFromSnakeCase",
-                 "date": "date",
-                 "nested": "{\"alpha\": \"alpha\", \"b\": 1, \"c\": 2}",
-                 "data": "",
-                 "url": null,
-                 "dict": {"hello": 2}
+                 "optional": 122
              }
         """#.data(using: .utf8)!
         
@@ -101,6 +93,10 @@ class ViewController: UIViewController {
             
             // JSON 字符串转对象解码策略
             decoder.jsonStringDecodingStrategy = .all
+            
+//            let model1 = try decoder.decode(TestModel1.self, from: json)
+//            debugPrint("optional:", model1.optional ?? "")
+
             
             let model = try decoder.decode(TestModel<Enum>.self, from: json)
             debugPrint("boolean:", model.boolean)
